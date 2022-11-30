@@ -18,8 +18,6 @@ class AuthController extends Controller
 
     public function login(LoginUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $request->validated($request->only(['email', 'password']));
-
         if (RateLimiter::remaining($request->ip(), 5)) {
             if(!Auth::attempt($request->only(['email', 'password']))) {
                 RateLimiter::hit($request->ip());
@@ -42,10 +40,9 @@ class AuthController extends Controller
 
     public function register(StoreUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $request->validated($request->only(['name', 'email', 'password']));
-
         $user = User::create([
-            'name' => $request->get('name'),
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
