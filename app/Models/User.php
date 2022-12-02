@@ -48,6 +48,6 @@ class User extends Authenticatable
      */
     public function trips(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Trip::class);
+        return $this->hasMany(UserTrip::class);
     }
 }
